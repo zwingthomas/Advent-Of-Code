@@ -1,5 +1,5 @@
 # Read the input from a file
-file_path = "input.txt" # Replace with your actual file path
+file_path = "input.txt"
 lines = File.readlines(file_path, chomp: true)
 
 # Initialize a hashmap built with empty sets as the default value
