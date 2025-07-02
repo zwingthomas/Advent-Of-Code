@@ -247,3 +247,27 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+"""
+Outputs:
+
+Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x106083cc0>
+Strategy Production.read_calibration_document took 0.000736666 seconds to complete
+Solution to problem 1 using strategy I would use in Production: 54630 
+
+Strategy HelperMethod.read_calibration_document took 0.010494958 seconds to complete
+Solution to problem 1 using a helper method for readability: 54630 
+
+Strategy OneLiner.read_calibration_document took 0.000587375 seconds to complete
+Solution to problem 1 using one line: 54630 
+
+Strategy Speedy.read_calibration_document took 0.000903209 seconds to complete
+Solution to problem 1, best big O: 54630 
+
+Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x106094b80>
+{'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
+Strategy SpeedyWithWords.read_calibration_document took 0.002345041 seconds to complete
+Solution to problem 2, best big O: 54770 
+
+"""
