@@ -61,7 +61,7 @@ class PanicError(Exception):
 @dataclass
 class TrebuchetStrategy(ABC):
 
-    file_name: str = "input.txt"
+    file_name: str = None
     file_arr: ClassVar[list[str]] = None
 
     @abstractmethod
@@ -70,7 +70,7 @@ class TrebuchetStrategy(ABC):
 
     @classmethod
     def __post_init__(cls):
-        if not TrebuchetStrategy.file_arr:
+        if not TrebuchetStrategy.file_arr and cls.file_name is not None:
             with File(cls.file_name, "r") as f:
                 TrebuchetStrategy.file_arr = f.readlines()
                 # notice how this is raised once per file,
@@ -215,6 +215,10 @@ class Calibrater:
 
     def __init__(self, strategy: TrebuchetStrategy) -> None:
         self._strategy = strategy
+        if isinstance(self._strategy, (Production, HelperMethod, OneLiner, Speedy)):
+            strategy.set_file_name("input.txt")
+        if isinstance(self._strategy, SpeedyWithWords):
+            strategy.set_file_name("input2.txt")
 
     def set_strategy(self, strategy: TrebuchetStrategy):
         if isinstance(self._strategy, (Production, HelperMethod, OneLiner, Speedy))\
@@ -243,6 +247,8 @@ def main():
     print("Solution to problem 1, best big O:", calibrater.calibrate(), "\n")
     calibrater.set_strategy(SpeedyWithWords())
     print("Solution to problem 2, best big O:", calibrater.calibrate(), "\n")
+    calibrater.set_strategy(Speedy())
+    print("Solution to problem 1, best big O:", calibrater.calibrate(), "\n")
 
 
 if __name__ == "__main__":
@@ -252,22 +258,26 @@ if __name__ == "__main__":
 """
 Outputs:
 
-Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x106083cc0>
-Strategy Production.read_calibration_document took 0.000736666 seconds to complete
+Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x101153e80>
+Strategy Production.read_calibration_document took 0.000761 seconds to complete
 Solution to problem 1 using strategy I would use in Production: 54630 
 
-Strategy HelperMethod.read_calibration_document took 0.010494958 seconds to complete
+Strategy HelperMethod.read_calibration_document took 0.010170208 seconds to complete
 Solution to problem 1 using a helper method for readability: 54630 
 
-Strategy OneLiner.read_calibration_document took 0.000587375 seconds to complete
+Strategy OneLiner.read_calibration_document took 0.000610709 seconds to complete
 Solution to problem 1 using one line: 54630 
 
-Strategy Speedy.read_calibration_document took 0.000903209 seconds to complete
+Strategy Speedy.read_calibration_document took 0.000934417 seconds to complete
 Solution to problem 1, best big O: 54630 
 
-Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x106094b80>
+Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x101164f80>
 {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
-Strategy SpeedyWithWords.read_calibration_document took 0.002345041 seconds to complete
+Strategy SpeedyWithWords.read_calibration_document took 0.002332041 seconds to complete
 Solution to problem 2, best big O: 54770 
+
+Exception caught: (type=<class '__main__.PanicError'>, value=PanicError('AHHHHHHH!!!'), traceback=<traceback object at 0x101164f40>
+Strategy Speedy.read_calibration_document took 0.000914334 seconds to complete
+Solution to problem 1, best big O: 54630
 
 """
